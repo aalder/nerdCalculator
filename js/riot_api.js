@@ -1,14 +1,10 @@
 var API_KEY = "b157e107-4466-49cd-bc5e-8370450e66e0";
 var REQUEST_URL_SHORT = 'https://na.api.pvp.net/api/lol/na';
 
-function onSubmit(summonerName) {
+function onSubmit(summonerName, callback) {
   if (summonerName) {
-    getSummonerId(SUMMONER_NAME, getSummonerStats)
+    getSummonerId(summonerName, getSummonerStats)
   }
-}
-
-function getSummonerName() {
-  return $("#userName").val();
 }
 
 function getSummonerId(name, callback) {
@@ -19,6 +15,8 @@ function getSummonerId(name, callback) {
     data: {
     },
     success: function (json) {
+      callback();
+
       var SUMMONER_NAME_NOSPACES = name.replace(" ", "");
 
       SUMMONER_NAME_NOSPACES = SUMMONER_NAME_NOSPACES.toLowerCase().trim();
