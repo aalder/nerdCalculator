@@ -12,7 +12,7 @@ function summonerLookUp() {
 	if (SUMMONER_NAME !== "") {
 
 		$.ajax({
-		url: REQUEST_URL_SHORT + '/v1.4/summoner/by-name/' + SUMMONER_NAME + '?api_key=' + $RIOT_SECRET,
+		url: REQUEST_URL_SHORT + '/v1.4/summoner/by-name/' + SUMMONER_NAME + '?api_key=b157e107-4466-49cd-bc5e-8370450e66e0',
 		type: 'GET',
 		dataType: 'json',
 		data: {
@@ -38,7 +38,7 @@ function summonerLookUp() {
 
 function getMostPlayedChamp(summonerID) {
 	$.ajax({
-		url: REQUEST_URL_SHORT + '/v1.3/stats/by-summoner/' + summonerID + '/ranked',
+		url: REQUEST_URL_SHORT + '/v1.3/stats/by-summoner/' + summonerID + '/ranked/?api_key=b157e107-4466-49cd-bc5e-8370450e66e0',
 		type: 'GET',
 		dataType: 'json',
 		data: {
