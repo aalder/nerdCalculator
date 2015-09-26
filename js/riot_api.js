@@ -77,14 +77,23 @@ function getMostPlayedChamp(lp, json) {
       average = currentChamp;
     }
   }
+  getChampionById(currentChamp['id'], )
   analyzeWins(lp, mpc, average)
 }
 
 function analyzeWins(lp, mpc, average) {
+  document.getElementById("lp").innerHTML = lp;
+
   var mpc_win_rate = mpc['stats']['totalSessionsWon'] / mpc['stats']['totalSessionsPlayed'];
   var average_win_rate = average['stats']['totalSessionsWon'] / average['stats']['totalSessionsPlayed'];
-  toProm = toPromotion(mpc_win_rate, lp)
-  //TODO API calls
+  document.getElementById("averageWinRate").innerHTML = average_win_rate;
+  document.getElementById("mostPlayedChampWinRate").innerHTML = mpc_win_rate;
+
+  toProm = toPromotion(mpc_win_rate, lp);
+  document.getElementById("gamesMostPlayedToProm").innerHTML = toProm;
+
+  toPromAv = toPromotion(average_win_rate, lp);
+  document.getElementById("gamesAverageToProm").innerHTML = toPromAv;
 }
 
 function getChampionById(champId, callback) {
@@ -97,6 +106,10 @@ function getChampionById(champId, callback) {
       callback(json)
     }
   });
+}
+
+function setMPC(champName) {
+  document.getElementById("mostPlayedChamp").innerHTML = champName;
 }
 
 function getSummonerRanking(summonerID) {
