@@ -77,13 +77,14 @@ function getMostPlayedChamp(lp, json) {
       average = currentChamp;
     }
   }
-  analyzeWins(mpc, average)
+  analyzeWins(lp, mpc, average)
 }
 
 function analyzeWins(lp, mpc, average) {
   var mpc_win_rate = mpc['stats']['totalSessionsWon'] / mpc['stats']['totalSessionsPlayed'];
   var average_win_rate = average['stats']['totalSessionsWon'] / average['stats']['totalSessionsPlayed'];
   toProm = toPromotion(mpc_win_rate, lp)
+  //TODO API calls
 }
 
 function getChampionById(champId, callback) {
