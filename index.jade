@@ -6,3 +6,22 @@
           .col-sm-12
             h1.cover-heading Nerd Calculator
             h3.cover-heading League of Legends Division Calculator
+            form.form-inline
+              .form-group
+                label.sr-only(for='exampleInputEmail3') Email address
+                input#exampleInputEmail3.form-control(type='email', placeholder='Email')
+              .form-group.dropdown
+                button#dropdownMenu1.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='true')
+                  | Dropdown
+                  span.caret
+                ul.dropdown-menu(aria-labelledby='dropdownMenu1')
+                  li
+                    a(href='#') Action
+                  li
+                    a(href='#') Another action
+                  li
+                    a(href='#') Something else here
+                  li
+                    a(href='#') Separated link
+              .form-group
+                button.btn.btn-success(type='button') Success
