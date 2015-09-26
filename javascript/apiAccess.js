@@ -3,7 +3,7 @@ var API_KEY = "b157e107-4466-49cd-bc5e-8370450e66e0";
 var REQUEST_URL_SHORT = 'https://na.api.pvp.net/api/lol/na'; 
 sumID = '';
 
-function onSubmit(e) {
+function onSubmit() {
   var SUMMONER_NAME = getSummonerName();
   if (SUMMONER_NAME) {
     getSummonerId(SUMMONER_NAME, getSummonerStats)
@@ -45,39 +45,50 @@ function getSummonerId(name, callback) {
 }
 
 function getSummonerStats(summonerID) {
-  var mostPlayed = getMostPlayedChamp(summonerID);
+  var mostPlayed = getMostPlayedChamp(summonerID, getChampionById);
   var winRate = getWinRate(summonerID);
 }
 
-function getMostPlayedChamp(summonerID) {
-      $.ajax({
-      url: REQUEST_URL_SHORT + '/v1.3/stats/by-summoner/' + sumID + '/ranked' + '?api_key=' + API_KEY,
-      type: 'GET',
-      dataType: 'json',
-      data: {
-      },
-      success: function (json) {
-        debugger
-        var champList = json['champions'];
-
-        mostPlayedChamp = function () {
-          var MPC;
-          for (i = 0; i < champList.length; i++) {
-            if (champList[i].stats.totalSessionsPlayed > MPC.stats.totalSessionsPlayed) {
-              MPC = champList[i];
-            } else {
-              
-            }
-          }
-          return MPC;
+function getMostPlayedChamp(summonerID, callback) {
+  $.ajax({
+    url: REQUEST_URL_SHORT + '/v1.3/stats/by-summoner/' + sumID + '/ranked' + '?api_key=' + API_KEY,
+    type: 'GET',
+    dataType: 'json',
+    data: {
+    },
+    success: function (json) {
+      var champList = json['champions']; // a list of ChampionStatsDto
+      var MPC; // what will hold the ID #
+      var champ = "default"; // the champ object
+      for (var i = 0; i < champList.length; i++) { // iterate over the length of 
+        if (champ == "default" || champList[i].stats.totalSessionsPlayed > champ.stats.totalSessionsPlayed) {
+          MPC = champList[i]['id'];
+          champ = champList[i];
+        } else {
+          //So the bug is that MPC is constantly 0 and that's not a Champion ID #. So something is going wrong here where we're setting the MPC to the highest champion id
         }
-        champList = json['champions'];
-        wr = champList.stats[0].totalSessionsWon / champList.stats[0].totalSessionsPlayed;
+      } 
+      callback(MPC);
+      champList = json['champions'];
+      wr = 1 + 1;
 
-        document.getElementById("mPC").innerHTML = mostPlayedChamp;
-        document.getElementById("wr").innerHTML = wr;
-      }
-    });
+      document.getElementById("wr").innerHTML = wr;
+    }
+  });
+}
+
+function getChampionById(champId) {
+  $.ajax ({
+    url: 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/champion/' + champId + '?api_key=' + API_KEY,
+    type: 'GET',
+    dataType: 'json',
+    data: {
+
+    },
+    success: function (json) {
+      document.getElementById("mPC").innerHTML = json['name'];
+    }
+  });
 }
 
 function getWinRate(summonerID) {
