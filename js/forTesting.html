@@ -1,5 +1,18 @@
-# Summoner Name
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<script src="jquery-2.1.4.js"></script>
+</head>
+<body>
+	<p>Summoner Name</p>
+	<input id="summonerName" />
+	<p>Region</p>
+	<input id="region" />
+	<input type="submit" onclick="summonerLookUp();" />
 
+	<p>Most Played Champion: <span id="mPC"></span></p>
+
+<script>
 function summonerLookUp() {
 	var SUMMONER_NAME = "";
 	SUMMONER_NAME = $("#summonerName").val();
@@ -27,6 +40,8 @@ function summonerLookUp() {
 				summonerID =
 				json[SUMMONER_NAME_NOSPACES].id;
 
+				getMostPlayedChamp(summonerID);
+
 
 			},
 			error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -47,17 +62,21 @@ function getMostPlayedChamp(summonerID) {
 				champList =
 				json[summonerID].champions;
 
-				mostPlayedChamp =
+				var mostPlayedChamp =
 				function () {
 					for (i = 0, i < champList.length, i++) {
 						var MPC;
 						if (champList[i].stats.totalSessionsPlayed > MPC.stats.totalSessionsPlayed) {
 						MPC = champList[i];
+						} else {
+							return MPC;
 						}
 					}
-					return MPC;
 				}
 				document.getElementById("mPC").innerHTML = mostPlayedChamp.
 			}
 		})
 }
+}</script>
+</body>
+</html>
