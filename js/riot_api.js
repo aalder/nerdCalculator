@@ -2,7 +2,6 @@ var API_KEY = "b157e107-4466-49cd-bc5e-8370450e66e0";
 var REQUEST_URL_SHORT = 'https://na.api.pvp.net/api/lol/na';
 
 function onSubmit(summonerName) {
-  debugger
   if (summonerName) {
     getSummonerId(summonerName, function(id) { getLeaguePoints(id, getSummonerStats) })
   }
@@ -18,8 +17,6 @@ function getSummonerId(name, callback) {
     success: function (data) {
       var sum_id = data[name.replace(" ", "").toLowerCase().trim()].id;
       var sum_level = data[name.replace(" ", "").toLowerCase().trim()].summonerLevel;
-
-      debugger
 
       $('summonerData').attr('name', name);
       $('summonerData').attr('id', sum_id);
@@ -49,39 +46,44 @@ function getLeaguePoints(id, callback) {
       }
     }
     $('summonerData').attr('leaguePoints', lp)
-    callback(id)
+    callback(lp, id)
   }
 });
 }
 
-function getSummonerStats(sum_id) {
+function getSummonerStats(lp, sum_id) {
   $.ajax({
     url: REQUEST_URL_SHORT + '/v1.3/stats/by-summoner/' + sum_id + '/ranked' + '?api_key=' + API_KEY,
     type: 'GET',
     dataType: 'json',
     data: {},
     success: function (data) {
-      getMostPlayedChamp(data);
-      getWinRate(data);
+      getMostPlayedChamp(lp, data);
     }
   });
 }
 
-function getMostPlayedChamp(json) {
+function getMostPlayedChamp(lp, json) {
   var count = 0;
   var mpc = 0;
+  var average = 0;
   for (var i = 0; i < json['champions'].length; i++) {
-    var currentChamp = json['champions'][i]['id']
-    if (json['champions'][i]['stats']['totalSessionsPlayed'] > count && currentChamp !== 0) {
+    var currentChamp = json['champions'][i]
+    if (json['champions'][i]['stats']['totalSessionsPlayed'] > count && currentChamp['id'] !== 0) {
       mpc = currentChamp;
       count = json['champions'][i]['stats']['totalSessionsPlayed'];
     }
+    else if (currentChamp['id'] == 0) {
+      average = currentChamp;
+    }
   }
-  // getChampionById(mpc, callback)
+  analyzeWins(mpc, average)
 }
 
-function getWinRate(data) {
-  
+function analyzeWins(lp, mpc, average) {
+  var mpc_win_rate = mpc['stats']['totalSessionsWon'] / mpc['stats']['totalSessionsPlayed'];
+  var average_win_rate = average['stats']['totalSessionsWon'] / average['stats']['totalSessionsPlayed'];
+  toProm = toPromotion(mpc_win_rate, lp)
 }
 
 function getChampionById(champId, callback) {
