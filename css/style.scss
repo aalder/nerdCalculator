@@ -1,10 +1,24 @@
 body {
-  font-family: 'Open Sans';
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  background-color: #555;
+  color: white;
 }
 
-.intro {
-  background-color: #333;
-  .intro-body {
-    font-weight: 300;
+h1, h2 {
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-weight: 300;
+}
+
+// hacks oh god.
+
+.site-wrapper {
+  h1 {
+    font-size: 4em;
   }
+  h3 {}
 }
