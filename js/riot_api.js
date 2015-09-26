@@ -1,11 +1,8 @@
-var sumName = "";
 var API_KEY = "b157e107-4466-49cd-bc5e-8370450e66e0";
 var REQUEST_URL_SHORT = 'https://na.api.pvp.net/api/lol/na';
-sumID = '';
 
-function onSubmit() {
-  var SUMMONER_NAME = getSummonerName();
-  if (SUMMONER_NAME) {
+function onSubmit(summonerName) {
+  if (summonerName) {
     getSummonerId(SUMMONER_NAME, getSummonerStats)
   }
 }
