@@ -12,16 +12,10 @@
                 input#exampleInputEmail3.form-control(type='email', placeholder='Email')
               .form-group.dropdown
                 button#dropdownMenu1.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='true')
-                  | Dropdown
+                  | Region
                   span.caret
                 ul.dropdown-menu(aria-labelledby='dropdownMenu1')
-                  li
-                    a(href='#') Action
-                  li
-                    a(href='#') Another action
-                  li
-                    a(href='#') Something else here
-                  li
-                    a(href='#') Separated link
+                  each val in ["NA", "EUNE", "EUW", "LAN", "LAS", "BR", "OCE", "RU", "KR"]
+                    li: a(href="")= val
               .form-group
                 button.btn.btn-success(type='button') Success
