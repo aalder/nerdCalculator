@@ -33,8 +33,11 @@ function summonerLookUp() {
 				alert("Error Getting Summoner Data");
 		}
 		});
+	}
+}
 
-		$.ajax({
+function getMostPlayedChamp(summonerID) {
+	$.ajax({
 		url: REQUEST_URL_SHORT + '/v1.3/stats/by-summoner/' + summonerID + '/ranked',
 		type: 'GET',
 		dataType: 'json',
@@ -48,13 +51,13 @@ function summonerLookUp() {
 				function () {
 					for (i = 0, i < champList.length, i++) {
 						var MPC;
-						if (champList[i].totalSessionsPlayed > MPC.totalSessionsPlayed) {
+						if (champList[i].stats.totalSessionsPlayed > MPC.stats.totalSessionsPlayed) {
 						MPC = champList[i];
 						}
 					}
 					return MPC;
 				}
+				document.getElementById("mPC").innerHTML = mostPlayedChamp.
 			}
 		})
-	}
 }
