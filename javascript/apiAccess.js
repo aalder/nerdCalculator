@@ -47,6 +47,7 @@ function getSummonerId(name, callback) {
 function getSummonerStats(summonerID) {
   var mostPlayed = getMostPlayedChamp(summonerID, getChampionById);
   var winRate = getWinRate(summonerID);
+  var playerRanking = getSummonerRanking(summonerID);
 }
 
 function getMostPlayedChamp(summonerID, callback) {
@@ -93,4 +94,23 @@ function getChampionById(champId) {
 
 function getWinRate(summonerID) {
   return "todo"
+}
+
+function getSummonerRanking(summonerID) {
+  $.ajax({
+    url: REQUEST_URL_SHORT + '/v2.5/league/by-summoner/' + summonerID + '?api_key=' + API_KEY,
+    type: 'GET',
+    dataType: 'json',
+    data: {
+    },
+    success: function (json) {
+      summonerTier = json[summonerID].tier;
+      summonerDivision = json[summonerID].division;
+      summonerLP = json[summonerID].leaguePoints;
+
+      document.getElementById("tier").innerHTML = summonerTier;
+      document.getElementById("division").innerHTML = summonerDivision;
+      document.getElementById("leaguePoints").innerHTML = summonerLP;
+    }
+  })
 }
