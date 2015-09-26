@@ -4,6 +4,7 @@ $greyDK: #2c3e50;
 $asbestos: #7f8c8d;
 $white: #ecf0f1;
 $teal: #1abc9c;
+$emerald: #2ecc71;
 
 body {
   font-family: 'Roboto', sans-serif;
@@ -32,6 +33,47 @@ h3 {
 
 .form-group {
   padding: 0 2px;
+}
+
+// BOOTSTRAP KILLER
+
+._sharpCorners {
+  // An abstraction for de-rounding Bootstrap Corners
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  border-radius: 0px;
+}
+
+.btn {
+  @extend ._sharpCorners;
+}
+
+.btn-success {
+  background-color: $emerald;
+  border-color: $emerald;
+  color: $greyDK;
+  &:hover {
+    color: $greyDK;
+    background-color: darken($emerald, 10%);
+    border-color: darken($emerald, 10%);
+  }
+}
+
+.form-group input {
+  @extend ._sharpCorners;
+}
+
+.dropdown .dropdown-menu {
+  @extend ._sharpCorners;
+}
+
+.progress {
+  @extend ._sharpCorners;
+}
+
+.progress-bar-success {
+  background-color: $emerald;
 }
 
 //// profile
